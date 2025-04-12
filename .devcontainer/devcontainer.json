@@ -1,0 +1,17 @@
+{
+    "name": "Go DevContainer",
+    "build": {
+      "dockerfile": "Dockerfile"
+    },
+    "settings": {
+      "go.toolsManagement.autoUpdate": true,
+      "go.useLanguageServer": true
+    },
+    "extensions": [
+      "golang.Go"
+    ],
+    "forwardPorts": [8080],
+    "postCreateCommand": "go mod tidy",
+    "remoteUser": "dev"
+  }
+  

@@ -1,0 +1,41 @@
+name: Build Go Mock Server (Linux & Windows)
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        goos: [linux, windows]
+        goarch: [amd64]
+
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v4
+
+      - name: Instalar Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: 1.21.6
+
+      - name: Configurar saída
+        run: mkdir -p dist
+
+      - name: Build binário para ${{ matrix.goos }}/${{ matrix.goarch }}
+        run: |
+          output_name=mockzilla
+          if [ "${{ matrix.goos }}" = "windows" ]; then
+            output_name="${output_name}.exe"
+          fi
+          GOOS=${{ matrix.goos }} GOARCH=${{ matrix.goarch }} go build -o dist/${{ matrix.goos }}_${{ matrix.goarch }}_$output_name main.go
+
+      - name: Upload artefatos
+        uses: actions/upload-artifact@v4
+        with:
+          name: mockzilla-binaries
+          path: dist/
