@@ -3,7 +3,7 @@ FROM ubuntu:24.04
 
 # Variáveis
 ENV DEBIAN_FRONTEND=noninteractive
-ENV GO_VERSION=1.21.6
+ENV GO_VERSION=1.24.2
 ENV GOPATH=/home/dev/go
 ENV PATH=$GOPATH/bin:/usr/local/go/bin:$PATH
 
