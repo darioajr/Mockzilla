@@ -1,14 +1,14 @@
 #!/bin/bash
 
 # Configuration
-HOST="http://localhost:8080"
+HOST="https://localhost:8443"
 ENDPOINT="/message"
 DURATION=30          # Seconds
 THREADS=4            # CPU cores
 CONNECTIONS=1000
 
 echo "-- INITIAL VALIDATION --"
-curl -X POST -H "Content-Type: application/json" -d '{"message":"test"}' $HOST$ENDPOINT || exit 1
+curl -k --http2 -X POST -H "Content-Type: application/json" -d '{"message":"test"}' $HOST$ENDPOINT || exit 1
 
 echo "-- PREPARING TEST ENVIRONMENT --"
 cat > post.lua <<EOF
